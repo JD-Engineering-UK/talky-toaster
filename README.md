@@ -6,7 +6,7 @@ This repository contains the firmware for a real-life version of the talky-toast
 
 ## TODO:
 - [x] Read distance data from mmWave sensor
-- [ ] Identify ways the mmWave sensor can be configured to reduce detection range and the non-presence timeout
+- [x] Identify ways the mmWave sensor can be configured to reduce detection range and the non-presence timeout
 - [ ] Play audio on the audio amplifier
 - [ ] Play audio track when somebody enters the room
 

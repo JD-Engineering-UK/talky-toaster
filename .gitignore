@@ -4,3 +4,4 @@
 sdkconfig
 sdkconfig.old
 main/audio_files/
+managed_components/

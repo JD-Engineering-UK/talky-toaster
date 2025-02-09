@@ -7,16 +7,30 @@
 #include "esp_system.h"
 #include "audio.h"
 
-extern const uint8_t drum_raw_start[] asm("_binary_drum_raw_start");
-extern const uint8_t drum_raw_end[] asm("_binary_drum_raw_end");
+void boot_sequence()
+{
+    extern const uint8_t boot_raw_start[] asm("_binary_boot_raw_start");
+    extern const uint8_t boot_raw_end[] asm("_binary_boot_raw_end");
+    const size_t boot_raw_size = (boot_raw_end - boot_raw_start);
+    
+    extern const uint8_t howdy_raw_start[] asm("_binary_howdy_raw_start");
+    extern const uint8_t howdy_raw_end[] asm("_binary_howdy_raw_end");
+    const size_t howdy_raw_size = (howdy_raw_end - howdy_raw_start);
+    queue_audio(boot_raw_size, boot_raw_start);
+    queue_audio(boot_raw_size, boot_raw_start);
+    queue_audio(boot_raw_size, boot_raw_start);
+    queue_audio(boot_raw_size, boot_raw_start);
+    queue_audio(boot_raw_size, boot_raw_start);
+    queue_audio(howdy_raw_size, howdy_raw_start);
+}
 
 void app_main(void)
 {
-    printf("Hello world!\n");
     audio_init();
+
+    boot_sequence();
     while(1){
-        queue_audio(drum_raw_start - drum_raw_end, drum_raw_start);
-        printf("Queued audio file\n");
+        
         vTaskDelay( pdMS_TO_TICKS(30000) );
     }
     vTaskDelay(portMAX_DELAY);

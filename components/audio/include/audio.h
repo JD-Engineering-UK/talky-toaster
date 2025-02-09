@@ -2,9 +2,9 @@
 
 typedef struct
 {
-    uint32_t length;
-    uint32_t *buf;
+    size_t length;
+    const uint8_t *buf;
 } AudioQueueItem_t;
 
 void audio_init(void);
-void queue_audio(uint32_t length, uint32_t *buf);
+void queue_audio(size_t length, const uint8_t *buf);

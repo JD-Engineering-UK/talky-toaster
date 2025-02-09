@@ -3,4 +3,4 @@
 /build
 sdkconfig
 sdkconfig.old
-main/drum.raw
+main/audio_files/

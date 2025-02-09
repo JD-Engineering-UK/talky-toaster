@@ -1,0 +1,15 @@
+menu "Audio output configuration"
+
+    config LRCLK_PIN_NUM
+        int "Pin number to use for the L/R clock signal"
+        default 3
+
+    config BCLK_PIN_NUM
+        int "Pin number to use for the bit clock signal"
+        default 8
+
+    config DATA_PIN_NUM
+        int "Pin number to use for the data signal"
+        default 18
+
+endmenu

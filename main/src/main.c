@@ -5,37 +5,19 @@
 #include "esp_chip_info.h"
 #include "esp_flash.h"
 #include "esp_system.h"
-#include "motionsensor.h"
+#include "audio.h"
+
+extern const uint8_t drum_raw_start[] asm("_binary_drum_raw_start");
+extern const uint8_t drum_raw_end[] asm("_binary_drum_raw_end");
 
 void app_main(void)
 {
     printf("Hello world!\n");
-
-    setup_motion_sensor();
-    uint16_t last_distance = 0;
-    bool last_detected = false;
+    audio_init();
     while(1){
-        bool detected = motion_sensor_get_detected();
-        if(last_detected != detected && detected){
-            ESP_LOGI("MAIN", "DETECTED A PERSON!");
-        }else if (last_detected != detected && !detected)
-        {
-            ESP_LOGI("MAIN", "PERSON GONE!");
-        }
-        last_detected = detected;
-        if(!detected){
-            vTaskDelay(500/portTICK_PERIOD_MS);
-            continue;
-        }
-        
-        uint16_t distance = motion_sensor_get_distance();
-        if(distance == last_distance){
-            vTaskDelay(500/portTICK_PERIOD_MS);
-            continue;
-        }
-        ESP_LOGI("MAIN", "Distance: % 4dcm", distance);
-        last_distance = distance;
-        vTaskDelay(500/portTICK_PERIOD_MS);
+        queue_audio(drum_raw_start - drum_raw_end, drum_raw_start);
+        printf("Queued audio file\n");
+        vTaskDelay( pdMS_TO_TICKS(30000) );
     }
     vTaskDelay(portMAX_DELAY);
     fflush(stdout);

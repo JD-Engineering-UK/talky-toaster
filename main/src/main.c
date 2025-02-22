@@ -9,25 +9,25 @@
 
 void boot_sequence()
 {
-    extern const uint8_t boot_raw_start[] asm("_binary_boot_raw_start");
-    extern const uint8_t boot_raw_end[] asm("_binary_boot_raw_end");
-    const size_t boot_raw_size = (boot_raw_end - boot_raw_start);
+    extern const uint8_t boot_mp3_start[] asm("_binary_boot_mp3_start");
+    extern const uint8_t boot_mp3_end[] asm("_binary_boot_mp3_end");
+    const size_t boot_mp3_size = (boot_mp3_end - boot_mp3_start);
     
-    extern const uint8_t howdy_raw_start[] asm("_binary_howdy_raw_start");
-    extern const uint8_t howdy_raw_end[] asm("_binary_howdy_raw_end");
-    const size_t howdy_raw_size = (howdy_raw_end - howdy_raw_start);
+    extern const uint8_t howdy_mp3_start[] asm("_binary_howdy_mp3_start");
+    extern const uint8_t howdy_mp3_end[] asm("_binary_howdy_mp3_end");
+    const size_t howdy_mp3_size = (howdy_mp3_end - howdy_mp3_start);
 
-    // extern const uint8_t im_talkie_raw_start[] asm("_binary_im_talkie_raw_start");
-    // extern const uint8_t im_talkie_raw_end[] asm("_binary_im_talkie_raw_end");
-    // const size_t im_talkie_raw_size = (im_talkie_raw_end - im_talkie_raw_start);
+    extern const uint8_t im_talkie_mp3_start[] asm("_binary_im_talkie_mp3_start");
+    extern const uint8_t im_talkie_mp3_end[] asm("_binary_im_talkie_mp3_end");
+    const size_t im_talkie_mp3_size = (im_talkie_mp3_end - im_talkie_mp3_start);
 
-    queue_audio(boot_raw_size, boot_raw_start);
-    queue_audio(boot_raw_size, boot_raw_start);
-    queue_audio(boot_raw_size, boot_raw_start);
-    queue_audio(boot_raw_size, boot_raw_start);
-    queue_audio(boot_raw_size, boot_raw_start);
-    queue_audio(howdy_raw_size, howdy_raw_start);
-    // queue_audio(im_talkie_raw_size, im_talkie_raw_start);
+    queue_audio(boot_mp3_size, boot_mp3_start);
+    queue_audio(boot_mp3_size, boot_mp3_start);
+    queue_audio(boot_mp3_size, boot_mp3_start);
+    queue_audio(boot_mp3_size, boot_mp3_start);
+    queue_audio(boot_mp3_size, boot_mp3_start);
+    queue_audio(howdy_mp3_size, howdy_mp3_start);
+    queue_audio(im_talkie_mp3_size, im_talkie_mp3_start);
 }
 
 void app_main(void)

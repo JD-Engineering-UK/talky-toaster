@@ -1,5 +1,3 @@
 idf_component_register(SRCS "src/main.c"
-                       PRIV_REQUIRES spi_flash motion_sensor audio board
-                       EMBED_FILES "audio_files/howdy.raw" "audio_files/boot.raw"
-                       REQUIRES "" 
+                       EMBED_FILES "audio_files/howdy.mp3" "audio_files/boot.mp3" "audio_files/im_talkie.mp3"
                        INCLUDE_DIRS "include")

@@ -1,13 +1,13 @@
-menu "My Audio Board"
+menu "Talky Toaster Hardware"
 
-    choice CUSTOMER_AUDIO_BOARD
-        prompt "My audio board"
-        default MY_BOARD_V1_0
+    choice BOARD_VERSION
+        prompt "Circuit board version"
+        default BREADBOARD_V1_0
         help
-            Select an audio board to use with the ESP-ADF
+            Select a hardware definition to build the firmware for
     
-    config MY_BOARD_V1_0
-        bool "My board v1.0"
+    config BREADBOARD_V1_0
+        bool "Breadboard v1.0"
     
     endchoice
     

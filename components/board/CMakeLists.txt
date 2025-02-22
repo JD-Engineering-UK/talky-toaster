@@ -1,13 +1,13 @@
 # Edit following two lines to set component requirements (see docs)
 set(COMPONENT_REQUIRES)
-set(COMPONENT_PRIV_REQUIRES audio_sal audio_hal esp_dispatcher esp_peripherals display_service)
+set(COMPONENT_PRIV_REQUIRES audio_sal audio_hal esp_dispatcher esp_peripherals)
 
 if(CONFIG_AUDIO_BOARD_CUSTOM)
-message(STATUS "Current board name is " CONFIG_AUDIO_BOARD_CUSTOM)
-list(APPEND COMPONENT_ADD_INCLUDEDIRS ./include )
+message(STATUS "Current board name is " CONFIG_BOARD_VERSION)
+list(APPEND COMPONENT_ADD_INCLUDEDIRS ./breadboard_v1_0/include )
 set(COMPONENT_SRCS
-./board.c
-./board_pins_config.c
+./breadboard_v1_0/board.c
+./breadboard_v1_0/board_pins_config.c
 )
 endif()
 

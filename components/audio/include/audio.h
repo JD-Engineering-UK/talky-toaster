@@ -1,10 +1,12 @@
 #pragma once
 
+#define QUEUE_AUDIO(filename) queue_audio( filename##_start, filename##_end )
+
 typedef struct
 {
-    size_t length;
-    const uint8_t *buf;
+    const uint8_t *buf_start;
+    const uint8_t *buf_end;
 } AudioQueueItem_t;
 
 void audio_init(void);
-void queue_audio(size_t length, const uint8_t *buf);
+void queue_audio(const uint8_t *buf_start, const uint8_t *buf_end);

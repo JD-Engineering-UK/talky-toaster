@@ -16,14 +16,10 @@
 #include "mp3_decoder.h"
 #include "board.h"
 
-
-
 #define AUDIO_BUFF_SIZE 2048
 
 static const char *TAG = "AUDIO";
 void audio_write_task(void *args);
-
-
 
 static QueueHandle_t audio_file_queue;
 
@@ -101,8 +97,8 @@ void audio_write_task(void *args)
         }
         printf("Got audio file from queue\n");
 
-        file_marker.start = queued_audio.buf;
-        file_marker.end = queued_audio.buf + queued_audio.length;
+        file_marker.start = queued_audio.buf_start;
+        file_marker.end = queued_audio.buf_end;
         file_marker.pos = 0;
         
         audio_pipeline_run(pipeline);
@@ -127,25 +123,21 @@ void audio_write_task(void *args)
             audio_element_state_t el_state = audio_element_get_state(i2s_stream_writer);
             if(el_state == AEL_STATE_FINISHED)
             {
-                ESP_LOGI(TAG,"Audio clip ended");
-                // audio_pipeline_stop(pipeline);
-                // audio_pipeline_wait_for_stop(pipeline);
                 audio_pipeline_reset_ringbuffer(pipeline);
                 audio_pipeline_reset_elements(pipeline);
                 audio_pipeline_change_state(pipeline, AEL_STATE_INIT);
                 break;
             }
-            ESP_LOGI(TAG, "Event %d", (int)msg.cmd);
         }
     }
     vTaskDelete(NULL);
 }
 
-void queue_audio(size_t length, const uint8_t *buf)
+void queue_audio(const uint8_t *buf_start, const uint8_t *buf_end)
 {   
     AudioQueueItem_t queue_item = {
-        .length = length,
-        .buf = buf,
+        .buf_end = buf_end,
+        .buf_start = buf_start,
     };
     xQueueGenericSend(audio_file_queue, &queue_item, portMAX_DELAY, queueSEND_TO_BACK);
 }

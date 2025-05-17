@@ -5,3 +5,6 @@ sdkconfig
 sdkconfig.old
 main/audio_files/
 managed_components/
+
+wifi_deets.json
+wifi_deets.bin

@@ -5,14 +5,22 @@
 #include "esp_chip_info.h"
 #include "esp_flash.h"
 #include "nvs_flash.h"
+#include <esp_netif.h>
+#include <esp_event.h>
+#include <ctime>
 #include "esp_system.h"
 #include "audio.h"
-#include "network.h"
+#include "wifi.h"
 
 EMBEDDED_FILE(boot_mp3);
 EMBEDDED_FILE(howdy_mp3);
 EMBEDDED_FILE(im_talkie_mp3);
 EMBEDDED_FILE(offer_toast_1_mp3);
+static const char *TAG = "Talkie";
+
+extern "C"{
+	void app_main();
+}
 
 
 void boot_sequence()
@@ -27,6 +35,7 @@ void boot_sequence()
     QUEUE_AUDIO(offer_toast_1_mp3);
 }
 
+
 void app_main(void)
 {
     //Initialize NVS
@@ -36,13 +45,14 @@ void app_main(void)
       ret = nvs_flash_init();
     }
     ESP_ERROR_CHECK(ret);
-    wifi_init_sta();
+	ESP_LOGI(TAG, "Flash Initialised");
+	ESP_ERROR_CHECK(esp_netif_init());
+	ESP_LOGI(TAG, "TCP/IP Stack enabled.");
+	ESP_ERROR_CHECK( esp_event_loop_create_default() );
+	initialise_ntp();
+	Wifi::start();
 
     audio_init();
-
-
-    
-
 
     boot_sequence();
     while(1){

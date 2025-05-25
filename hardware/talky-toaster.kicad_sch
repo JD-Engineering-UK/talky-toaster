@@ -1,0 +1,443 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "078613a7-0caa-4129-a2ed-c0aaa2f1804b")
+	(paper "A4")
+	(lib_symbols)
+	(wire
+		(pts
+			(xy 175.26 82.55) (xy 201.93 82.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "10d20e64-bc42-4d10-bddb-47f3ebe61183")
+	)
+	(wire
+		(pts
+			(xy 175.26 95.25) (xy 201.93 95.25)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "147b8353-6d31-4c7a-97d9-8d420568546b")
+	)
+	(wire
+		(pts
+			(xy 175.26 97.79) (xy 201.93 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "39ea51d6-23ae-46a7-b808-b5c5aa33d318")
+	)
+	(wire
+		(pts
+			(xy 175.26 87.63) (xy 201.93 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5cbb2ee7-c325-4383-a18d-a691c4c6ccea")
+	)
+	(wire
+		(pts
+			(xy 175.26 105.41) (xy 201.93 105.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8009db20-2d78-4ee2-9508-956018414744")
+	)
+	(wire
+		(pts
+			(xy 175.26 85.09) (xy 201.93 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "851e0f01-3fb3-4fa0-a1c1-2604c234559c")
+	)
+	(wire
+		(pts
+			(xy 175.26 102.87) (xy 201.93 102.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b3bb3eb0-4ece-4464-a47f-e4e0c169407a")
+	)
+	(wire
+		(pts
+			(xy 175.26 80.01) (xy 201.93 80.01)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c2182a91-c2c7-41db-b944-9490848a3035")
+	)
+	(wire
+		(pts
+			(xy 175.26 107.95) (xy 201.93 107.95)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "eb62cc4e-e36e-4a0c-b45f-da9aaa82ad49")
+	)
+	(wire
+		(pts
+			(xy 100.33 87.63) (xy 146.05 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fcb61322-0dda-49c6-86b0-ff3d4a19a52f")
+	)
+	(sheet
+		(at 201.93 76.2)
+		(size 40.64 46.99)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "66ca9b50-14bc-417a-9e1a-5c7b188bb642")
+		(property "Sheetname" "IO"
+			(at 201.93 75.4884 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "io.kicad_sch"
+			(at 201.93 123.7746 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(pin "AUDIO BCLK" input
+			(at 201.93 80.01 180)
+			(uuid "e8aac6de-6690-463c-a237-2eb6925c4ef4")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "AUDIO DIN" input
+			(at 201.93 82.55 180)
+			(uuid "e8554faa-6eeb-4427-bb3a-d25546d55a33")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "AUDIO ENABLE" input
+			(at 201.93 85.09 180)
+			(uuid "e5213624-bceb-41b3-9532-bdf76eb52413")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "AUDIO LRCLK" input
+			(at 201.93 87.63 180)
+			(uuid "8dc22cd3-6154-4be4-ac28-9864cc269bcd")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "MOTION UART Rx" input
+			(at 201.93 95.25 180)
+			(uuid "9870b5c0-bab8-46d9-a8be-6ea55f2f0eeb")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "MOTION UART Tx" output
+			(at 201.93 97.79 180)
+			(uuid "31f6d858-4323-499a-ba9d-f6d157e8c12b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "LED B" input
+			(at 201.93 107.95 180)
+			(uuid "b4ec9514-2e6c-4d44-ac59-b3cf919cdf30")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "LED G" input
+			(at 201.93 105.41 180)
+			(uuid "f64a4b50-5c83-4bbd-8c66-a7a194f88733")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "LED R" input
+			(at 201.93 102.87 180)
+			(uuid "d5c54578-ef5b-4d8b-a7e3-9e9d03aae7a5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "talky-toaster"
+				(path "/078613a7-0caa-4129-a2ed-c0aaa2f1804b"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 68.58 77.47)
+		(size 31.75 46.99)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "a46f0558-2969-4b98-97b4-ee2dad6679b3")
+		(property "Sheetname" "Power"
+			(at 68.58 76.7584 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "power.kicad_sch"
+			(at 68.58 125.0446 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(pin "Power Good" input
+			(at 100.33 87.63 0)
+			(uuid "903b9bea-7aac-4952-8f44-ed837b9ec8a0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "talky-toaster"
+				(path "/078613a7-0caa-4129-a2ed-c0aaa2f1804b"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 146.05 76.2)
+		(size 29.21 46.99)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "e65a7be1-b24e-429d-935d-b9232724f3a6")
+		(property "Sheetname" "MCU"
+			(at 146.05 75.4884 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "mcu.kicad_sch"
+			(at 146.05 123.7746 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(pin "Power Good" input
+			(at 146.05 87.63 180)
+			(uuid "767328ad-1609-46c8-a97f-423c2ae3e7e0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "AUDIO BCLK" output
+			(at 175.26 80.01 0)
+			(uuid "22f7f673-ed40-48cb-ac39-8a6627b05957")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "AUDIO DIN" output
+			(at 175.26 82.55 0)
+			(uuid "de41b28f-4799-4f89-b62f-5320ad71fa67")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "AUDIO ENABLE" output
+			(at 175.26 85.09 0)
+			(uuid "efdbfec6-274e-4f51-81bf-96bcf19fdfd6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "AUDIO LRC" output
+			(at 175.26 87.63 0)
+			(uuid "6aaf1f0c-e476-4509-ba16-17df9e693dff")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "LED B" output
+			(at 175.26 107.95 0)
+			(uuid "2e018e3e-2469-49aa-a7d0-cff69264139f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "LED G" output
+			(at 175.26 105.41 0)
+			(uuid "6f7c53c8-325d-476c-a567-6052ac3ee7ee")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "LED R" output
+			(at 175.26 102.87 0)
+			(uuid "1c88ec9c-7e2e-443c-aeb9-32550429b752")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "MOTION UART Rx" input
+			(at 175.26 97.79 0)
+			(uuid "ecefce01-2307-41bd-874a-c071eb96ee06")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "MOTION UART Tx" output
+			(at 175.26 95.25 0)
+			(uuid "1f7f9d65-3472-4f8b-a14b-b9f36af7981f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "talky-toaster"
+				(path "/078613a7-0caa-4129-a2ed-c0aaa2f1804b"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)

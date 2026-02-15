@@ -4,11 +4,21 @@ set(COMPONENT_PRIV_REQUIRES audio_sal audio_hal esp_dispatcher esp_peripherals)
 
 if(CONFIG_AUDIO_BOARD_CUSTOM)
 message(STATUS "Current board name is " CONFIG_BOARD_VERSION)
+
+if(CONFIG_BREADBOARD_V1_0)
 list(APPEND COMPONENT_ADD_INCLUDEDIRS ./breadboard_v1_0/include )
 set(COMPONENT_SRCS
 ./breadboard_v1_0/board.c
 ./breadboard_v1_0/board_pins_config.c
 )
+elseif(CONFIG_PERFBOARD_V1_1)
+list(APPEND COMPONENT_ADD_INCLUDEDIRS ./perfboard_v1_1/include )
+set(COMPONENT_SRCS
+./perfboard_v1_1/board.c
+./perfboard_v1_1/board_pins_config.c
+)
+endif()
+
 endif()
 
 register_component()

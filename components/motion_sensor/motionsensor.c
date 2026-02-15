@@ -180,8 +180,10 @@ void motion_sensor_task(void* args) {
         }
 
         // if(report_updated)
-        // ESP_LOGI(TAG, "Detected: %02d, Distance: %02d", report->detected, report->distance);
-        // ESP_LOGI(TAG, "GATES: %02d %02d %02d %02d %02d %02d %02d %02d %02d %02d %02d %02d %02d %02d %02d %02d", report->gate_energies[0], report->gate_energies[1], report->gate_energies[2], report->gate_energies[3], report->gate_energies[4], report->gate_energies[5], report->gate_energies[6], report->gate_energies[7], report->gate_energies[8], report->gate_energies[9], report->gate_energies[10], report->gate_energies[11], report->gate_energies[12], report->gate_energies[13], report->gate_energies[14], report->gate_energies[15]);
+        // {
+        //     ESP_LOGI(TAG, "Detected: %02d, Distance: %02d", report->detected, report->distance);
+        //     ESP_LOGI(TAG, "GATES: %02d %02d %02d %02d %02d %02d %02d %02d %02d %02d %02d %02d %02d %02d %02d %02d", report->gate_energies[0], report->gate_energies[1], report->gate_energies[2], report->gate_energies[3], report->gate_energies[4], report->gate_energies[5], report->gate_energies[6], report->gate_energies[7], report->gate_energies[8], report->gate_energies[9], report->gate_energies[10], report->gate_energies[11], report->gate_energies[12], report->gate_energies[13], report->gate_energies[14], report->gate_energies[15]);
+        // }
         
     }
     free(buffer);

@@ -1,6 +1,5 @@
 idf_component_register(
-        SRCS "wifi.cpp" "credentials.cpp"
+        SRCS "time.cpp" "credentials.cpp" "wifi.cpp"
         INCLUDE_DIRS "include"
-        REQUIRES "esp_wifi" "files"
-        EMBED_FILES "${PROJECT_DIR}/wifi_deets.bin"
+        REQUIRES "esp_wifi" "nvs_flash"
 )

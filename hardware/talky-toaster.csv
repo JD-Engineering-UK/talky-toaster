@@ -1,0 +1,27 @@
+Reference	Qty	Value	DNP	Exclude from BOM	Exclude from Board	Footprint	Datasheet
+C1,C6		2	22uF				Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder	~
+C2,C3		2	DNF	DNP			Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder	~
+C4			1	4.7uF				Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder	~
+C5			1	120pF	DNP			Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder	~
+C7,C8,C10	3	100nF				Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder	~
+C9			1	10uF				Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder	~
+D1,D2		2	D_Schottky_Small				Diode_SMD:D_SOD-123	~
+D3			1	LED_ARGB				Auto Lib:19237R6GHBHCA012T	~
+J1			1	UJ20-C-H-G-MSMT-4-P16-TR				Auto Lib:UJ20CHGMSMT4P16TR	https://www.sameskydevices.com/product/resource/supplyframepdf/uj20-c-h-g-msmt-4-p16-tr.pdf
+J2			1	Wj250A-3.5-2P				talky-toaster:Spring Terminal 2P	
+J3			1	mmWave Sensor Socket				Connector_PinSocket_2.54mm:PinSocket_1x05_P2.54mm_Vertical	~
+L1			1	1uH				Inductor_SMD:L_1812_4532Metric_Pad1.30x3.40mm_HandSolder	~
+R1,R2		2	0R				Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder	~
+R3			1	420k				Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder	~
+R4			1	100k				Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder	~
+R5			1	499k				Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder	~
+R6,R7		2	5.1k				Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder	~
+R8			1	10k				Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder	~
+R9			1	560k				Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder	~
+R10,R11,R12	3	2.2k				Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder	~
+TP1,TP5		2	TestPoint_2Pole				Connector_PinHeader_1.00mm:PinHeader_2x01_P1.00mm_Vertical_SMD	~
+TP2			1	TestPoint_2Pole				Connector_PinSocket_2.54mm:PinSocket_2x01_P2.54mm_Vertical	~
+TP3,TP4		2	TestPoint				TestPoint:TestPoint_Pad_D1.0mm	~
+U1			1	ESP32-S3-WROOM-1				RF_Module:ESP32-S3-WROOM-1	https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_en.pdf
+U2			1	TPS62A01DRL				Package_TO_SOT_SMD:SOT-563	https://www.ti.com/lit/gpn/tps62a01
+U3			1	MAX98357A				Package_DFN_QFN:TQFN-16-1EP_3x3mm_P0.5mm_EP1.23x1.23mm_ThermalVias	https://www.analog.com/media/en/technical-documentation/data-sheets/MAX98357A-MAX98357B.pdf

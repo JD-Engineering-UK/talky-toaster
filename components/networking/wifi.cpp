@@ -1,20 +1,21 @@
 #include <esp_wifi.h>
 #include <esp_log.h>
 #include <cstring>
-#include "wifi.h"
-#include "files.h"
-#include "credentials.h"
+#include "networking.h"
+#include "nvs_flash.h"
+#include "esp_wifi.h"
 
 #define DEFAULT_SCAN_LIST_SIZE 5
 
 const static char *TAG = "WiFi";
 
 Wifi::state_e Wifi::state = Wifi::NOT_INITIALISED;
-
-esp_err_t Wifi::start() {
+esp_err_t Wifi::init() {
 	// Already initialised. Skip doing it again...
 	if(state != NOT_INITIALISED) return ESP_OK;
-	init_credentials();
+	enumerate_credentials();
+	
+	initialise_ntp();
 
 	esp_netif_t *sta_netif = esp_netif_create_default_wifi_sta();
 	wifi_init_config_t config = WIFI_INIT_CONFIG_DEFAULT();
@@ -25,8 +26,8 @@ esp_err_t Wifi::start() {
 		return err;
 	}
 
-	esp_event_handler_instance_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &wifi_event_handler, nullptr, nullptr);
-	esp_event_handler_instance_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &ip_event_handler, nullptr, nullptr);
+	esp_event_handler_instance_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &wifi_event_handler, this, nullptr);
+	esp_event_handler_instance_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &ip_event_handler, this, nullptr);
 
 	err = esp_wifi_set_mode(WIFI_MODE_STA);
 	if(err != ESP_OK){
@@ -34,19 +35,40 @@ esp_err_t Wifi::start() {
 		return err;
 	}
 
-	err = esp_wifi_start();
+	state = STOPPED;
+	ESP_LOGI(TAG, "WiFi Initialised.");
+	return err;
+}
+esp_err_t Wifi::start() {
+	esp_err_t err = esp_wifi_start();
 	if(err != ESP_OK){
 		ESP_LOGE(TAG, "WiFi start error: %s", esp_err_to_name(err));
 		return err;
 	}
+	esp_wifi_set_inactive_time(WIFI_IF_STA, 6);
+	esp_wifi_set_ps(WIFI_PS_MAX_MODEM);
 
-	state = INITIALISED;
-	ESP_LOGI(TAG, "WiFi Initialised.");
+	state = DISCONNECTED;
+	ESP_LOGI(TAG, "WiFi started.");
 
-	return ESP_OK;
+	return err;
+}
+
+esp_err_t Wifi::stop() {
+	esp_err_t err = esp_wifi_stop();
+	if(err != ESP_OK){
+		ESP_LOGE(TAG, "WiFi stop error: %s", esp_err_to_name(err));
+		return err;
+	}
+
+	state = STOPPED;
+	ESP_LOGI(TAG, "WiFi stopped.");
+
+	return err;
 }
 
 void Wifi::wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data) {
+	Wifi *wifi_instance = static_cast<Wifi *>(arg);
 	// Skip processing non-WiFi events
 	if(event_base != WIFI_EVENT) return;
 //	ESP_LOGI(TAG, "WiFi Event");
@@ -65,29 +87,26 @@ void Wifi::wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t ev
 		esp_wifi_scan_get_ap_num(&ap_count);
 		esp_wifi_scan_get_ap_records(&number, ap_info);
 		int8_t best_rssi = -127;
-		cred_t *best_network;
+		ap_cred_t *best_network;
 
 		ESP_LOGI(TAG, "Total APs scanned = %u, actual AP number ap_info holds = %u", ap_count, number);
 		for(int i=0; i<number; ++i){
 			ESP_LOGI(TAG, "Seen NW: %s", ap_info[i].ssid);
-			if(ap_info[i].authmode != WIFI_AUTH_WPA2_WPA3_PSK && ap_info[i].authmode != WIFI_AUTH_WPA2_PSK && ap_info[i].authmode != WIFI_AUTH_WPA3_PSK){
-				continue;
-			}
-			cred_t * known_ap = get_credentials(ap_info[i].ssid, sizeof ap_info[i].ssid);
+			ap_cred_t * known_ap = wifi_instance->get_credentials(reinterpret_cast<char *>(ap_info[i].ssid));
 			if(!known_ap)
 			{	
 				ESP_LOGD(TAG, "Network not known");
 				continue;
 			}
-			ESP_LOGI(TAG, "Best RSSI: %d", best_rssi);
-			ESP_LOGI(TAG, "SSID: %s, RSSI: %d", ap_info[i].ssid, ap_info[i].rssi);
+			ESP_LOGD(TAG, "Best RSSI: %d", best_rssi);
+			ESP_LOGD(TAG, "SSID: %s, RSSI: %d", ap_info[i].ssid, ap_info[i].rssi);
 			if(ap_info[i].rssi > best_rssi){
-				ESP_LOGI(TAG, "Found better network");
+				ESP_LOGD(TAG, "Found better network");
 				best_rssi = ap_info[i].rssi;
 				best_network = known_ap;
 			}
 		}
-		ESP_LOGI(TAG, "Best RSSI found: %d", best_rssi);
+		ESP_LOGD(TAG, "Best RSSI found: %d", best_rssi);
 		if(best_rssi > -127){
 			// Found an AP to connect to...
 			wifi_config_t config = {
@@ -102,11 +121,9 @@ void Wifi::wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t ev
 //					}
 				}
 			};
-			memcpy(reinterpret_cast<char *>(config.sta.ssid), best_network->ssid, best_network->ssid_len);
-			memcpy(reinterpret_cast<char *>(config.sta.password), best_network->password, best_network->passwd_len);
-			char local_buf[33] = {0};
-			memcpy(local_buf, best_network->ssid, best_network->ssid_len);
-			ESP_LOGI(TAG, "Connecting to: %s", local_buf);
+			strncpy(reinterpret_cast<char *>(config.sta.ssid), best_network->ssid, sizeof(config.sta.ssid));
+			strncpy(reinterpret_cast<char *>(config.sta.password), best_network->passwd, sizeof(config.sta.password));
+			ESP_LOGI(TAG, "Connecting to: %s", best_network->ssid);
 			esp_wifi_set_config(WIFI_IF_STA, &config);
 			ESP_ERROR_CHECK(esp_wifi_connect());
 			Wifi::state = Wifi::CONNECTING;
@@ -116,10 +133,16 @@ void Wifi::wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t ev
 			Wifi::state = Wifi::ACTIVE_SCANNING;
 		}
 	}else if(event_id == WIFI_EVENT_STA_BSS_RSSI_LOW){
+		ESP_LOGW(TAG, "RSSI low - disconnecting");
 		esp_wifi_disconnect();
 	}
 }
 
 void Wifi::ip_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data) {
+	// Wifi *wifi_instance = static_cast<Wifi *>(arg);
+}
 
+
+bool Wifi::isConnected(void){
+	return (state == CONNECTED);
 }

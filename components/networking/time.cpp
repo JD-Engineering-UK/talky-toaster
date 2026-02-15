@@ -1,5 +1,4 @@
-#include "main.h"
-
+#include "networking.h"
 #include <string.h>
 #include <time.h>
 #include <sys/time.h>
@@ -10,33 +9,17 @@
 #include "esp_attr.h"
 #include "esp_sleep.h"
 #include "nvs_flash.h"
-//#include "protocol_examples_common.h"
 #include "esp_netif_sntp.h"
 #include "lwip/ip_addr.h"
 #include "esp_sntp.h"
 
-static const char *TAG = "example";
+static const char *TAG = "Time";
 
 #ifndef INET6_ADDRSTRLEN
 #define INET6_ADDRSTRLEN 48
 #endif
 
-/* Variable holding number of times ESP32 restarted since first boot.
- * It is placed into RTC memory using RTC_DATA_ATTR and
- * maintains its value when ESP32 wakes from deep sleep.
- */
-RTC_DATA_ATTR static int boot_count = 0;
-
 static void obtain_time(void);
-
-#ifdef CONFIG_SNTP_TIME_SYNC_METHOD_CUSTOM
-void sntp_sync_time(struct timeval *tv)
-{
-   settimeofday(tv, NULL);
-   ESP_LOGI(TAG, "Time is synchronized from custom code");
-   sntp_set_sync_status(SNTP_SYNC_STATUS_COMPLETED);
-}
-#endif
 
 void time_sync_notification_cb(struct timeval *tv)
 {

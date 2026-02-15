@@ -1,4 +1,4 @@
-25606310802767446
+25606311425962614
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -34,6 +34,13 @@ Integrated Circuit
 0
 8
 8
+Auto Lib
+UHD111AFKAC3K23E1L3VG5ZB3Z3
+0404 (1010)
+LED (Multiple)
+0
+4
+4
 Auto Lib
 UJ20CHGMSMT4P16TR
 UJ20-C-H-G-MSMT-4-P16-TR-2
@@ -102672,13 +102679,6 @@ Varistor
 Varistor_Panasonic_VF
 Panasonic VF series varistor, 6x8mm body, 3.2mm height, https://mediap.industry.panasonic.eu/assets/imported/industrial.panasonic.com/cdbs/www-data/pdf/AWA0000/AWA0000C4.pdf
 Varistor VF
-0
-2
-2
-talky-toaster
-Spring Terminal 2P
-
-
 0
 2
 2

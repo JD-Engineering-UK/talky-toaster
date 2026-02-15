@@ -9,6 +9,9 @@ menu "Talky Toaster Hardware"
     config BREADBOARD_V1_0
         bool "Breadboard v1.0"
     
+    config PERFBOARD_V1_1
+        bool "Perfboard v1.1"
+
     endchoice
     
  endmenu

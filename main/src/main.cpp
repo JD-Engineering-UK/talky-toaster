@@ -25,7 +25,8 @@ static const char *TAG = "Talkie";
 
 static bool previously_detected = false;
 static uint32_t detection_time = 0;
-static uint32_t cooldown_time = 0;
+static uint32_t last_question_time = 0;
+static bool prev_someone_there = false;
 
 extern "C"{
 	void app_main();
@@ -60,6 +61,39 @@ void play_offer(){
     }
 }
 
+bool should_offer_toast()
+{
+    // Don't ask if we have asked in the last 30 seconds
+    if (esp_timer_get_time() - last_question_time < 30000000)
+    {
+        return false;
+    }
+
+    // Don't ask if there is no one there
+    if (!motion_sensor_get_detected() || motion_sensor_get_distance() > 75)
+    {
+        return false;
+    }
+
+    // Don't ask if it's night time
+    time_t now;
+    struct tm timeinfo;
+    time(&now);
+    localtime_r(&now, &timeinfo);
+    if (timeinfo.tm_year > 120 && (timeinfo.tm_hour >= 19 || timeinfo.tm_hour < 8))
+    {
+        return false;
+    }
+
+    // Don't ask if there hasn't been a negative detection of at least 30 seconds
+    if (previously_detected && detection_time && (esp_timer_get_time() - detection_time < 30000000))
+    {    
+        return false;
+    }
+    
+    return true;
+}
+
 void app_main(void)
 {
     //Initialize NVS
@@ -86,50 +120,22 @@ void app_main(void)
     wifi->start();
     while(1)
     {
-        time_t now;
-		struct tm timeinfo;
-		time(&now);
-		localtime_r(&now, &timeinfo);
-		if(timeinfo.tm_year < 120)
-        {
-			vTaskDelay(5000 / portTICK_PERIOD_MS);
-			continue;
-		}
+        bool current_detected = motion_sensor_get_detected();
+        uint16_t current_distance = motion_sensor_get_distance();
+        bool current_someone_there = current_detected && (current_distance <= 75);
         
-		if(timeinfo.tm_year > 120 && (timeinfo.tm_hour >= 21 || timeinfo.tm_hour < 8))
-        {   // It's night time so we prevent the sensor from detecting motion to avoid disturbing people.
-            vTaskDelay(60000 / portTICK_PERIOD_MS);
-            continue;
-        }
-
-        uint16_t distance = motion_sensor_get_distance();
-        ESP_LOGI(TAG, "Distance: %u", distance);
-        bool detected = motion_sensor_get_detected() && distance < 75;
-
-        if (detected != previously_detected && !detection_time)
-        {
+        if (!current_someone_there && prev_someone_there) {
             detection_time = esp_timer_get_time();
-        }
-        else if (detected == previously_detected && detection_time)
-        {
-            detection_time = 0;
-        }
-
-
-
-        if (detected && !previously_detected && detection_time &&(esp_timer_get_time() - detection_time > 1000000) && (esp_timer_get_time() >= cooldown_time))
-        {
             previously_detected = true;
-            ESP_LOGI(TAG, "Motion detected!");
-            play_offer();
-            detection_time = 0;
         }
-        else if (!detected && previously_detected && detection_time && (esp_timer_get_time() - detection_time > 1000000))
+        prev_someone_there = current_someone_there;
+
+        if (should_offer_toast())
         {
-            cooldown_time = esp_timer_get_time() + 5*60*1000000;
-            previously_detected = false;
-            detection_time = 0;
+            play_offer();
+            last_question_time = esp_timer_get_time();
         }
+
         vTaskDelay( pdMS_TO_TICKS(500) );
     }
     vTaskDelay(portMAX_DELAY);

@@ -4,4 +4,4 @@ idf_component_register(SRCS "src/main.cpp"
                             "audio_files/offer_toast_2.mp3" "audio_files/offer_muffin.mp3"
                             "audio_files/waffle_man.mp3"
                        INCLUDE_DIRS "include"
-                       REQUIRES files audio board motion_sensor networking)
+                       REQUIRES files audio board motion_sensor networking app_update JD_FOTA)

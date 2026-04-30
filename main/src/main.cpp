@@ -11,9 +11,11 @@
 #include <esp_event.h>
 #include <ctime>
 #include "esp_system.h"
+#include "esp_ota_ops.h"
 #include "audio.h"
 #include "networking.h"
 #include "motionsensor.h"
+#include "JD_FOTA.h"
 
 EMBEDDED_FILE(boot_mp3);
 EMBEDDED_FILE(howdy_mp3);
@@ -61,6 +63,20 @@ void play_offer(){
     }
 }
 
+void confirm_boot()
+{
+    const esp_partition_t *running = esp_ota_get_running_partition();
+    esp_ota_img_states_t ota_state;
+    if (esp_ota_get_state_partition(running, &ota_state) == ESP_OK) 
+    {
+        if (ota_state == ESP_OTA_IMG_PENDING_VERIFY) 
+        {
+            esp_ota_mark_app_valid_cancel_rollback();
+            ESP_LOGI(TAG, "Boot confirmed, rollback cancelled");
+        }
+    }
+}
+
 bool should_offer_toast()
 {
     // Don't ask if we have asked in the last 30 seconds
@@ -80,7 +96,7 @@ bool should_offer_toast()
     struct tm timeinfo;
     time(&now);
     localtime_r(&now, &timeinfo);
-    if (timeinfo.tm_year > 120 && (timeinfo.tm_hour >= 19 || timeinfo.tm_hour < 8))
+    if (timeinfo.tm_year > 120 && (timeinfo.tm_hour >= 23 || timeinfo.tm_hour < 8))
     {
         return false;
     }
@@ -92,6 +108,12 @@ bool should_offer_toast()
     }
     
     return true;
+}
+
+void do_10_minute_actions()
+{
+    // Placeholder for any actions we want to do every 10 minutes, such as checking for updates
+    check_latest();
 }
 
 void app_main(void)
@@ -118,6 +140,9 @@ void app_main(void)
     wifi->init();
     // wifi->add_ap("SSID", "password");
     wifi->start();
+
+    uint32_t last_10_minute_action = 0;
+    confirm_boot();
     while(1)
     {
         bool current_detected = motion_sensor_get_detected();
@@ -134,6 +159,12 @@ void app_main(void)
         {
             play_offer();
             last_question_time = esp_timer_get_time();
+        }
+
+        if (esp_timer_get_time() - last_10_minute_action > 60000000)//0) // 10 minutes
+        {
+            do_10_minute_actions();
+            last_10_minute_action = esp_timer_get_time();
         }
 
         vTaskDelay( pdMS_TO_TICKS(500) );

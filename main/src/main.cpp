@@ -96,7 +96,7 @@ bool should_offer_toast()
     struct tm timeinfo;
     time(&now);
     localtime_r(&now, &timeinfo);
-    if (timeinfo.tm_year > 120 && (timeinfo.tm_hour >= 23 || timeinfo.tm_hour < 8))
+    if (timeinfo.tm_year > 120 && (timeinfo.tm_hour >= 19 || timeinfo.tm_hour < 8))
     {
         return false;
     }

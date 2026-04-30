@@ -4,7 +4,9 @@
 extern "C" {
 #endif
 
-bool check_latest(void);
+bool check_latest();
+void start_latest_firmware_update();
+void start_firmware_update(const char *url);
 
 #ifdef __cplusplus
 }

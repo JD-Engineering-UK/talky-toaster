@@ -113,7 +113,8 @@ bool should_offer_toast()
 void do_10_minute_actions()
 {
     // Placeholder for any actions we want to do every 10 minutes, such as checking for updates
-    check_latest();
+    start_latest_firmware_update();
+    confirm_boot();                 // If we hit here then we can assume the firmware is stable
 }
 
 void app_main(void)
@@ -161,7 +162,7 @@ void app_main(void)
             last_question_time = esp_timer_get_time();
         }
 
-        if (esp_timer_get_time() - last_10_minute_action > 60000000)//0) // 10 minutes
+        if (esp_timer_get_time() - last_10_minute_action > 600000000) // 10 minutes
         {
             do_10_minute_actions();
             last_10_minute_action = esp_timer_get_time();
